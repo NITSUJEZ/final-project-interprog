@@ -47,3 +47,22 @@ public:
     }
 };
 
+// Strategy design pattern for discount
+class DiscountStrategy {
+    public:
+        virtual double applyDiscount(double amount) const = 0;
+    };
+    
+    class NoDiscount : public DiscountStrategy {
+    public:
+        double applyDiscount(double amount) const override {
+            return amount;
+        }
+    };
+    
+    class TenPercentDiscount : public DiscountStrategy {
+    public:
+        double applyDiscount(double amount) const override {
+            return amount * 0.9;
+        }
+    };
