@@ -66,3 +66,19 @@ class DiscountStrategy {
             return amount * 0.9;
         }
     };
+
+//rantal system for car
+class CarRentalSystem {
+    private:
+        vector<RentalCar*> cars;
+        DiscountStrategy* discountStrategy;
+    
+        //func to find a car in the system
+        RentalCar* findCar(const string& make, const string& model, int year) {
+            for (auto& car : cars) {
+                if (car->getCarDetails() == make + " " + model + " (" + to_string(year) + ")") {
+                    return car;
+                }
+            }
+            return nullptr;
+        }
