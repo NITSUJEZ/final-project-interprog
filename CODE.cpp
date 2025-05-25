@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
 //Ito yung base class para sa kotse
@@ -82,3 +83,19 @@ class CarRentalSystem {
             }
             return nullptr;
         }
+
+    //Get valid integer input with validation (important)
+    int getValidIntegerInput(int minValue = 0, int maxValue = 10000) {
+        int value;
+        while (true) {
+            cin >> value;
+            if (cin.fail() || value < minValue || value > maxValue) {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Invalid input. Please enter a valid number between " << minValue << " and " << maxValue << ": ";
+            } else {
+                break;
+            }
+        }
+        return value;
+    }
