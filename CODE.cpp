@@ -100,7 +100,6 @@ class CarRentalSystem {
         return value;
     }
 
-
     //Double input with validation
     double getValidDoubleInput(double minValue = 0.0) {
         double value;
@@ -115,4 +114,39 @@ class CarRentalSystem {
             }
         }
         return value;
+    }
+
+    public:
+    CarRentalSystem(DiscountStrategy* discountStrategy = new NoDiscount())
+        : discountStrategy(discountStrategy) {}
+
+    //Adding a new car
+    void addCar() {
+        string make, model;
+        int year;
+        double rentalPricePerDay;
+
+        cout << "Enter car brand: "; 
+        cin >> make;
+        if (make.empty()) {
+            cout << "Brand cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car model: ";
+        cin >> model;
+        if (model.empty()) {
+            cout << "Model cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car year (1886 to current year): ";
+        year = getValidIntegerInput(1886, 2023); //Reasonable year validation 
+
+        cout << "Enter rental price per day: $";
+        rentalPricePerDay = getValidDoubleInput(0.01);
+
+        auto car = new RentalCar(make, model, year, rentalPricePerDay);
+        cars.push_back(car);
+        cout << "Car added successfully!\n";
     }
