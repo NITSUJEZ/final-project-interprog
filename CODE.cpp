@@ -99,3 +99,20 @@ class CarRentalSystem {
         }
         return value;
     }
+
+
+    //Double input with validation
+    double getValidDoubleInput(double minValue = 0.0) {
+        double value;
+        while (true) {
+            cin >> value;
+            if (cin.fail() || value < minValue) {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Invalid input. Please enter a valid number: ";
+            } else {
+                break;
+            }
+        }
+        return value;
+    }
