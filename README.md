@@ -13,7 +13,7 @@ Features:
 - Apply or remove a 10% discount using a discount strategy
 - Input validation for integers and double values
 
-How to Run
+How to Run:
 1. Open your terminal or command prompt.
 2. Navigate to the folder where your source file CODE.cpp is located.
 3. Compile the program using a C++ compiler. 
@@ -33,5 +33,5 @@ Sample menu:
 9. Exit
     
 Team Members:
-Justin Laurel
+Justin Laurel,
 Cedrick Mendoza
