@@ -141,7 +141,7 @@ class CarRentalSystem {
         }
 
         cout << "Enter car year (1886 to current year): ";
-        year = getValidIntegerInput(1886, 2023); //Reasonable year validation 
+        year = getValidIntegerInput(1886, 2025);
 
         cout << "Enter rental price per day: $";
         rentalPricePerDay = getValidDoubleInput(0.01);
@@ -187,7 +187,7 @@ class CarRentalSystem {
         }
 
         cout << "Enter car year: ";
-        year = getValidIntegerInput(1886, 2023);
+        year = getValidIntegerInput(1886, 2025);
 
         auto car = findCar(make, model, year);
         if (car) {
@@ -220,7 +220,7 @@ class CarRentalSystem {
         }
 
         cout << "Enter car year: ";
-        year = getValidIntegerInput(1886, 2023);
+        year = getValidIntegerInput(1886, 2025);
 
         auto car = findCar(make, model, year);
         if (car) {
@@ -262,7 +262,7 @@ class CarRentalSystem {
         }
 
         cout << "Enter car year: ";
-        year = getValidIntegerInput(1886, 2023);
+        year = getValidIntegerInput(1886, 2025);
 
         cout << "Enter number of days to rent: ";
         days = getValidIntegerInput(1);
@@ -299,7 +299,7 @@ class CarRentalSystem {
         }
 
         cout << "Enter car year: ";
-        year = getValidIntegerInput(1886, 2023);
+        year = getValidIntegerInput(1886, 2025);
 
         auto car = findCar(make, model, year);
         if (car) {
@@ -310,4 +310,74 @@ class CarRentalSystem {
         }
     }
 
-    
+    //Set discount strategy
+    void setDiscountStrategy(DiscountStrategy* newStrategy) {
+        discountStrategy = newStrategy;
+    }
+
+    //Toggle discount (turn off 10% discount)
+    void toggleDiscount() {
+        if (dynamic_cast<TenPercentDiscount*>(discountStrategy)) {
+            discountStrategy = new NoDiscount(); //Turn off discount
+            cout << "Discount has been turned off.\n";
+        } else {
+            discountStrategy = new TenPercentDiscount(); //Apply 10% discount
+            cout << "10% Discount has been applied.\n";
+        }
+    }
+};
+
+int main() {
+    CarRentalSystem system;
+    int choice;
+
+    do {
+        cout << "\n--- Car Rental System Menu ---\n";
+        cout << "1. Add Car\n";
+        cout << "2. Display Available Cars\n";
+        cout << "3. Rent Car\n";
+        cout << "4. Return Car\n";
+        cout << "5. Remove Car\n";
+        cout << "6. Change Car Rental Price\n";  
+        cout << "7. Apply 10% Discount\n";
+        cout << "8. Turn Off Discount\n";  
+        cout << "9. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                system.addCar();
+                break;
+            case 2:
+                system.displayAvailableCars();
+                break;
+            case 3:
+                system.rentCar();
+                break;
+            case 4:
+                system.returnCar();
+                break;
+            case 5:
+                system.removeCar();
+                break;
+            case 6:
+                system.changeCarRentalPrice();  
+                break;
+            case 7:
+                system.setDiscountStrategy(new TenPercentDiscount());
+                cout << "Discount strategy set to 10% off.\n";
+                break;
+            case 8:
+                system.toggleDiscount();  
+                break;
+            case 9:
+                cout << "Exiting the system.\n";
+                break;
+            default:
+                cout << "Invalid choice! Try again.\n";
+        }
+    } while (choice != 9);
+
+    return 0;
+}
