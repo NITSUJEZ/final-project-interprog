@@ -150,3 +150,52 @@ class CarRentalSystem {
         cars.push_back(car);
         cout << "Car added successfully!\n";
     }
+
+    //Display available cars
+    void displayAvailableCars() const {
+        bool found = false;
+        cout << "Available Cars for Rent:\n";
+        for (const auto& car : cars) {
+            if (car->isAvailable()) {
+                car->display();
+                found = true;
+            }
+        }
+        if (!found) {
+            cout << "No cars available for rent.\n";
+        }
+    }
+
+    //Change car rental price 
+    void changeCarRentalPrice() {
+        string make, model;
+        int year;
+        double newPrice;
+
+        cout << "Enter car brand: ";
+        cin >> make;
+        if (make.empty()) {
+            cout << "Brand cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car model: ";
+        cin >> model;
+        if (model.empty()) {
+            cout << "Model cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car year: ";
+        year = getValidIntegerInput(1886, 2023);
+
+        auto car = findCar(make, model, year);
+        if (car) {
+            cout << "Enter new rental price per day: $";
+            newPrice = getValidDoubleInput(0.01);
+            car->updateRentalPrice(newPrice);
+            cout << "Updated rental price successfully.\n";
+        } else {
+            cout << "Car not found to update.\n";
+        }
+    }
