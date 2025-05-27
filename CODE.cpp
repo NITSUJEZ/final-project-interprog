@@ -199,3 +199,45 @@ class CarRentalSystem {
             cout << "Car not found to update.\n";
         }
     }
+
+    //Remove a car from the system
+    void removeCar() {
+        string make, model;
+        int year;
+
+        cout << "Enter car brand: ";  
+        cin >> make;
+        if (make.empty()) {
+            cout << "Brand cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car model: ";
+        cin >> model;
+        if (model.empty()) {
+            cout << "Model cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car year: ";
+        year = getValidIntegerInput(1886, 2023);
+
+        auto car = findCar(make, model, year);
+        if (car) {
+            //Find car using loop then erase
+            auto it = cars.begin();
+            for (; it != cars.end(); ++it) {
+                if (*it == car) {
+                    break;
+                }
+            }
+
+            //Pag nakita na yung car
+            if (it != cars.end()) {
+                cars.erase(it);
+                cout << "Car removed successfully.\n";
+            }
+        } else {
+            cout << "Car not found to remove.\n";
+        }
+    }
