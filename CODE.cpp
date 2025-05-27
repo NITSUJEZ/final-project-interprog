@@ -241,3 +241,73 @@ class CarRentalSystem {
             cout << "Car not found to remove.\n";
         }
     }
+
+    //Rent a car
+    void rentCar() {
+        string make, model;
+        int year, days;
+
+        cout << "Enter car brand: ";  
+        cin >> make;
+        if (make.empty()) {
+            cout << "Brand cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car model: ";
+        cin >> model;
+        if (model.empty()) {
+            cout << "Model cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car year: ";
+        year = getValidIntegerInput(1886, 2023);
+
+        cout << "Enter number of days to rent: ";
+        days = getValidIntegerInput(1);
+
+        auto car = findCar(make, model, year);
+        if (car && car->isAvailable()) {
+            car->updateAvailability(false);
+            double totalAmount = discountStrategy->applyDiscount(car->getRentalPrice() * days);
+            cout << "\nReceipt:\n";
+            cout << "Car rented: " << car->getCarDetails() << " for " << days << " days\n";
+            cout << "Total Rental Charges: $" << totalAmount << "\n";
+        } else {
+            cout << "Car not available or not found.\n";
+        }
+    }
+
+    //Return a car
+    void returnCar() {
+        string make, model;
+        int year;
+
+        cout << "Enter car brand: ";  
+        cin >> make;
+        if (make.empty()) {
+            cout << "Brand cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car model: ";
+        cin >> model;
+        if (model.empty()) {
+            cout << "Model cannot be empty!" << endl;
+            return;
+        }
+
+        cout << "Enter car year: ";
+        year = getValidIntegerInput(1886, 2023);
+
+        auto car = findCar(make, model, year);
+        if (car) {
+            car->updateAvailability(true);
+            cout << "\nCar returned successfully.\n";
+        } else {
+            cout << "Car not found for return.\n";
+        }
+    }
+
+    
