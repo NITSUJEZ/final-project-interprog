@@ -1,19 +1,18 @@
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
 //Ito yung base class para sa kotse
 class Car {
 protected:
-    string make, model;
+    string brand, model;
     int year;
 
 public:
-    Car(string mk, string mdl, int yr) : make(mk), model(mdl), year(yr) {}
+    Car(string br, string mdl, int yr) : brand(br), model(mdl), year(yr) {}
     virtual void display() const = 0;
     virtual string getCarDetails() const {
-        return make + " " + model + " (" + to_string(year) + ")";
+        return brand + " " + model + " (" + to_string(year) + ")";
     }
 };
 
@@ -23,8 +22,8 @@ class RentalCar : public Car {
     bool available;
 
 public:
-    RentalCar(string mk, string mdl, int yr, double price)
-        : Car(mk, mdl, yr), rentalPricePerDay(price), available(true) {}
+    RentalCar(string br, string mdl, int yr, double price)
+        : Car(br, mdl, yr), rentalPricePerDay(price), available(true) {}
 
     void display() const override {
         cout << getCarDetails() << " - $" << rentalPricePerDay << "/day - "
@@ -75,9 +74,9 @@ class CarRentalSystem {
         DiscountStrategy* discountStrategy;
     
         //func to find a car in the system
-        RentalCar* findCar(const string& make, const string& model, int year) {
+        RentalCar* findCar(const string& brand, const string& model, int year) {
             for (auto& car : cars) {
-                if (car->getCarDetails() == make + " " + model + " (" + to_string(year) + ")") {
+                if (car->getCarDetails() == brand + " " + model + " (" + to_string(year) + ")") {
                     return car;
                 }
             }
@@ -122,13 +121,13 @@ class CarRentalSystem {
 
     //Adding a new car
     void addCar() {
-        string make, model;
+        string brand, model;
         int year;
         double rentalPricePerDay;
 
         cout << "Enter car brand: "; 
-        cin >> make;
-        if (make.empty()) {
+        cin >> brand;
+        if (brand.empty()) {
             cout << "Brand cannot be empty!" << endl;
             return;
         }
@@ -146,7 +145,7 @@ class CarRentalSystem {
         cout << "Enter rental price per day: $";
         rentalPricePerDay = getValidDoubleInput(0.01);
 
-        auto car = new RentalCar(make, model, year, rentalPricePerDay);
+        auto car = new RentalCar(brand, model, year, rentalPricePerDay);
         cars.push_back(car);
         cout << "Car added successfully!\n";
     }
@@ -168,13 +167,13 @@ class CarRentalSystem {
 
     //Change car rental price 
     void changeCarRentalPrice() {
-        string make, model;
+        string brand, model;
         int year;
         double newPrice;
 
         cout << "Enter car brand: ";
-        cin >> make;
-        if (make.empty()) {
+        cin >> brand;
+        if (brand.empty()) {
             cout << "Brand cannot be empty!" << endl;
             return;
         }
@@ -189,7 +188,7 @@ class CarRentalSystem {
         cout << "Enter car year: ";
         year = getValidIntegerInput(1886, 2025);
 
-        auto car = findCar(make, model, year);
+        auto car = findCar(brand, model, year);
         if (car) {
             cout << "Enter new rental price per day: $";
             newPrice = getValidDoubleInput(0.01);
@@ -202,12 +201,12 @@ class CarRentalSystem {
 
     //Remove a car from the system
     void removeCar() {
-        string make, model;
+        string brand, model;
         int year;
 
         cout << "Enter car brand: ";  
-        cin >> make;
-        if (make.empty()) {
+        cin >> brand;
+        if (brand.empty()) {
             cout << "Brand cannot be empty!" << endl;
             return;
         }
@@ -222,7 +221,7 @@ class CarRentalSystem {
         cout << "Enter car year: ";
         year = getValidIntegerInput(1886, 2025);
 
-        auto car = findCar(make, model, year);
+        auto car = findCar(brand, model, year);
         if (car) {
             //Find car using loop then erase
             auto it = cars.begin();
@@ -244,12 +243,12 @@ class CarRentalSystem {
 
     //Rent a car
     void rentCar() {
-        string make, model;
+        string brand, model;
         int year, days;
 
         cout << "Enter car brand: ";  
-        cin >> make;
-        if (make.empty()) {
+        cin >> brand;
+        if (brand.empty()) {
             cout << "Brand cannot be empty!" << endl;
             return;
         }
@@ -267,7 +266,7 @@ class CarRentalSystem {
         cout << "Enter number of days to rent: ";
         days = getValidIntegerInput(1);
 
-        auto car = findCar(make, model, year);
+        auto car = findCar(brand, model, year);
         if (car && car->isAvailable()) {
             car->updateAvailability(false);
             double totalAmount = discountStrategy->applyDiscount(car->getRentalPrice() * days);
@@ -281,12 +280,12 @@ class CarRentalSystem {
 
     //Return a car
     void returnCar() {
-        string make, model;
+        string brand, model;
         int year;
 
         cout << "Enter car brand: ";  
-        cin >> make;
-        if (make.empty()) {
+        cin >> brand;
+        if (brand.empty()) {
             cout << "Brand cannot be empty!" << endl;
             return;
         }
@@ -301,7 +300,7 @@ class CarRentalSystem {
         cout << "Enter car year: ";
         year = getValidIntegerInput(1886, 2025);
 
-        auto car = findCar(make, model, year);
+        auto car = findCar(brand, model, year);
         if (car) {
             car->updateAvailability(true);
             cout << "\nCar returned successfully.\n";
